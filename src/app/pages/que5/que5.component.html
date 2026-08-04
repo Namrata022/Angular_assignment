@@ -1,0 +1,15 @@
+<h1>Course List</h1>
+
+<label>Select Course:</label>
+
+<select [(ngModel)]="selectedCourse">
+    <option value="">--Select Course--</option>
+
+    <option *ngFor="let Course of courseList" [value]="Course">
+        {{ Course }}
+    </option>
+</select>
+
+<br><br>
+
+<p>You selected: {{ selectedCourse }}</p>

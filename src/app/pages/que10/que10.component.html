@@ -1,0 +1,73 @@
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <!-- Form -->
+        <div class="col-lg-5">
+
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Edit Profile</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="mb-3">
+                        <label class="form-label">Name</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="user.name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <textarea
+                            class="form-control"
+                            rows="3"
+                            [(ngModel)]="user.address"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Phone</label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            [(ngModel)]="user.phone">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Profile -->
+        <div class="col-lg-5">
+
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">User Profile</h4>
+                </div>
+
+                <div class="card-body">
+
+                    <h5 class="card-title">{{user.name}}</h5>
+
+                    <p class="card-text">
+                        <strong>Address:</strong><br>
+                        {{user.address}}
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Phone:</strong><br>
+                        {{user.phone}}
+                    </p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

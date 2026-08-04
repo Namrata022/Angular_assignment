@@ -1,0 +1,45 @@
+<div class="container mt-3">
+
+  <div class="form-check mb-3">
+    <input
+      type="checkbox"
+      class="form-check-input"
+      id="show"
+      [(ngModel)]="showList">
+
+    <label class="form-check-label" for="show">
+      Show Student List
+    </label>
+  </div>
+
+  @if(showList){
+
+    <table class="table table-bordered table-striped">
+
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Course</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for(student of students; track student.name){
+
+          <tr>
+            <td>{{student.name}}</td>
+            <td>{{student.course}}</td>
+            <td>{{student.marks}}</td>
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  }
+
+</div>

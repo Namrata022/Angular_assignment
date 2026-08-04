@@ -1,0 +1,29 @@
+<div class="container mt-3">
+  <div class="row">
+
+    @for(student of students; track student.name){
+
+        <div class="col-md-3 mb-3">
+
+            <div class="card">
+                <img
+                    [src]="student.photo"
+                    class="card-img-top"
+                    alt="Student Photo" width="100px" height="300px">
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ student.name }}</h5>
+
+                    <p class="card-text">
+                    <strong>Course:</strong> {{ student.course }}
+                    </p>
+
+                    <p class="card-text">
+                    <strong>Marks:</strong> {{ student.marks }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+  </div>
+</div>
