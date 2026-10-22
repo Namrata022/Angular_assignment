@@ -1,0 +1,40 @@
+<div class="container mt-4">
+  <div class="card shadow border-0">
+    <div class="card-header bg-danger text-white p-3 d-flex justify-content-between align-items-center">
+      <h3 class="mb-0">🔒 Secure Admin Dashboard</h3>
+      <button class="btn btn-sm btn-outline-light" (click)="logout()">Logout</button>
+    </div>
+
+    <div class="card-body p-4">
+      <div class="alert alert-success">
+        <h5 class="alert-heading">Access Granted!</h5>
+        <p class="mb-0">You are successfully authenticated and protected by <code>authGuard</code>.</p>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+          <div class="card bg-light p-3 text-center border-0 shadow-sm">
+            <h6 class="text-muted">Total Users</h6>
+            <h2 class="text-primary mb-0">1,248</h2>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card bg-light p-3 text-center border-0 shadow-sm">
+            <h6 class="text-muted">Active Sessions</h6>
+            <h2 class="text-success mb-0">87</h2>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="card bg-light p-3 text-center border-0 shadow-sm">
+            <h6 class="text-muted">System Health</h6>
+            <h2 class="text-info mb-0">99.9%</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <a routerLink="/que20" class="btn btn-secondary">&larr; Back to Question 20</a>
+      </div>
+    </div>
+  </div>
+</div>

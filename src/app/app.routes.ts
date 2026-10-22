@@ -10,6 +10,22 @@ import { Que11Component } from './pages/que11/que11.component';
 import { Que12Component } from './pages/que12/que12.component';
 import { Que13Component } from './pages/que13/que13.component';
 import { Que14Component } from './pages/que14/que14.component';
+import { Que15Component } from './pages/que15/que15.component';
+import { Que16Component } from './pages/que16/que16.component';
+import { Que17Component } from './pages/que17/que17.component';
+import { Que18Component } from './pages/que18/que18.component';
+import { HomeComponent } from './pages/que18/home/home.component';
+import { AboutComponent } from './pages/que18/about/about.component';
+import { ContactComponent } from './pages/que18/contact/contact.component';
+import { Que19Component } from './pages/que19/que19.component';
+import { StudentDetailComponent } from './pages/que19/student-detail/student-detail.component';
+import { authGuard } from './guards/auth.guard';
+import { Que20Component } from './pages/que20/que20.component';
+import { AdminComponent } from './pages/que20/admin/admin.component';
+import { Que21Component } from './pages/que21/que21.component';
+import { Que22Component } from './pages/que22/que22.component';
+import { Que23Component } from './pages/que23/que23.component';
+import { Que24Component } from './pages/que24/que24.component';
 
 export const routes: Routes = [
     {path:'que2',component:Que2Component},
@@ -23,4 +39,29 @@ export const routes: Routes = [
     {path:'que12',component:Que12Component},
     {path:'que13',component:Que13Component},
     {path:'que14',component:Que14Component},
+    {path:'que15',component:Que15Component},
+    {path:'que16',component:Que16Component},
+    {path:'que17',component:Que17Component},
+    {
+      path:'que18',
+      component:Que18Component,
+      children: [
+        { path: '', redirectTo: 'home', pathMatch: 'full' },
+        { path: 'home', component: HomeComponent },
+        { path: 'about', component: AboutComponent },
+        { path: 'contact', component: ContactComponent }
+      ]
+    },
+    { path: 'home', component: HomeComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'contact', component: ContactComponent },
+    { path: 'que19', component: Que19Component },
+    { path: 'student/:id', component: StudentDetailComponent },
+    { path: 'student', redirectTo: 'que19', pathMatch: 'full' },
+    { path: 'que20', component: Que20Component },
+    { path: 'admin', component: AdminComponent, canActivate: [authGuard] },
+    { path: 'que21', component: Que21Component },
+    { path: 'que22', component: Que22Component },
+    { path: 'que23', component: Que23Component },
+    { path: 'que24', component: Que24Component }
 ];

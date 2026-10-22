@@ -1,0 +1,49 @@
+<div class="container mt-4">
+  <div class="card shadow-sm p-4">
+    <h2 class="text-success mb-3">Question 17: Observables & subscribe()</h2>
+    <p class="text-muted">Fetching user list from <code>https://jsonplaceholder.typicode.com/users</code> using an <strong>Observable</strong> and receiving data via <strong>subscribe()</strong>.</p>
+    <hr />
+
+    <!-- Loading Spinner -->
+    <div *ngIf="isLoading" class="text-center my-4">
+      <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2 text-muted">Loading users...</p>
+    </div>
+
+    <!-- Error Alert -->
+    <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Users Table -->
+    <div *ngIf="!isLoading && !errorMessage">
+      <h5 class="mb-3">Users List (Total: {{ users.length }})</h5>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Company</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td><strong>{{ user.id }}</strong></td>
+              <td>{{ user.name }}</td>
+              <td><span class="badge bg-secondary">&#64;{{ user.username }}</span></td>
+              <td><a [href]="'mailto:' + user.email">{{ user.email }}</a></td>
+              <td>{{ user.phone }}</td>
+              <td>{{ user.company?.name || 'N/A' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

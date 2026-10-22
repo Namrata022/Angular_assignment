@@ -1,0 +1,181 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Question 24: Dynamic Form using FormArray</h4>
+      <span class="badge bg-warning text-dark">FormArray</span>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="text-muted">
+        Allows users to dynamically add and remove subjects with marks using Angular's <code>FormArray</code> inside a reactive form.
+      </p>
+
+      <div class="row">
+        <!-- Dynamic Form Column -->
+        <div class="col-lg-7 mb-4">
+          <form [formGroup]="studentForm" (ngSubmit)="onSubmit()" novalidate class="card p-4 bg-light border-0 shadow-sm">
+            <!-- Student Information -->
+            <div class="row mb-3">
+              <div class="col-md-7 mb-2 mb-md-0">
+                <label class="form-label fw-bold">Student Name <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="studentName"
+                  placeholder="e.g. John Doe"
+                  [class.is-invalid]="studentForm.get('studentName')?.invalid && (studentForm.get('studentName')?.dirty || studentForm.get('studentName')?.touched)"
+                />
+                <div *ngIf="studentForm.get('studentName')?.invalid && (studentForm.get('studentName')?.dirty || studentForm.get('studentName')?.touched)" class="invalid-feedback">
+                  Student name is required.
+                </div>
+              </div>
+
+              <div class="col-md-5">
+                <label class="form-label fw-bold">Roll Number <span class="text-danger">*</span></label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="rollNumber"
+                  placeholder="e.g. R-101"
+                  [class.is-invalid]="studentForm.get('rollNumber')?.invalid && (studentForm.get('rollNumber')?.dirty || studentForm.get('rollNumber')?.touched)"
+                />
+                <div *ngIf="studentForm.get('rollNumber')?.invalid && (studentForm.get('rollNumber')?.dirty || studentForm.get('rollNumber')?.touched)" class="invalid-feedback">
+                  Roll number is required.
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <!-- Dynamic Subjects (FormArray) Header -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h5 class="mb-0 text-primary">Subjects &amp; Marks (FormArray)</h5>
+              <button type="button" class="btn btn-sm btn-success" (click)="addSubject()">
+                + Add Subject
+              </button>
+            </div>
+
+            <!-- Subject Rows -->
+            <div formArrayName="subjects">
+              <div
+                *ngFor="let subjectGroup of subjects.controls; let i = index"
+                [formGroupName]="i"
+                class="card p-3 mb-2 bg-white border"
+              >
+                <div class="row align-items-center">
+                  <div class="col-auto">
+                    <span class="badge bg-secondary">#{{ i + 1 }}</span>
+                  </div>
+
+                  <div class="col-md-6 mb-2 mb-md-0">
+                    <input
+                      type="text"
+                      class="form-control form-control-sm"
+                      formControlName="subjectName"
+                      placeholder="Subject Name (e.g. Physics)"
+                      [class.is-invalid]="subjectGroup.get('subjectName')?.invalid && (subjectGroup.get('subjectName')?.dirty || subjectGroup.get('subjectName')?.touched)"
+                    />
+                    <div *ngIf="subjectGroup.get('subjectName')?.invalid && (subjectGroup.get('subjectName')?.dirty || subjectGroup.get('subjectName')?.touched)" class="invalid-feedback">
+                      Subject name is required.
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-8">
+                    <input
+                      type="number"
+                      class="form-control form-control-sm"
+                      formControlName="marks"
+                      placeholder="Marks (0-100)"
+                      [class.is-invalid]="subjectGroup.get('marks')?.invalid && (subjectGroup.get('marks')?.dirty || subjectGroup.get('marks')?.touched)"
+                    />
+                    <div *ngIf="subjectGroup.get('marks')?.invalid && (subjectGroup.get('marks')?.dirty || subjectGroup.get('marks')?.touched)" class="invalid-feedback">
+                      Marks (0-100).
+                    </div>
+                  </div>
+
+                  <div class="col-auto text-end">
+                    <button
+                      type="button"
+                      class="btn btn-outline-danger btn-sm"
+                      (click)="removeSubject(i)"
+                      [disabled]="subjects.length <= 1"
+                      title="Remove Subject"
+                    >
+                      &times;
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Calculation Summary -->
+            <div class="d-flex justify-content-between align-items-center bg-white p-2 rounded border mt-3 mb-4">
+              <span><strong>Total Subjects:</strong> {{ subjects.length }}</span>
+              <span><strong>Total Marks:</strong> {{ currentTotalMarks }}</span>
+              <span><strong>Average:</strong> {{ currentAverageMarks }}%</span>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="studentForm.invalid">
+                Submit Report Card
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="onReset()">
+                Reset
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Result Summary Column -->
+        <div class="col-lg-5">
+          <div *ngIf="submittedResult; else noResult" class="card shadow-sm border-success">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">Generated Report Card</h5>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title text-primary">{{ submittedResult.studentName }}</h5>
+              <p class="text-muted mb-3">Roll Number: <strong>{{ submittedResult.rollNumber }}</strong></p>
+
+              <table class="table table-sm table-bordered">
+                <thead class="table-light">
+                  <tr>
+                    <th>#</th>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of submittedResult.subjects; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ s.subjectName }}</td>
+                    <td class="fw-bold">{{ s.marks }}/100</td>
+                  </tr>
+                </tbody>
+                <tfoot class="table-light fw-bold">
+                  <tr>
+                    <td colspan="2">Total Marks</td>
+                    <td>{{ submittedResult.totalMarks }}</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">Average</td>
+                    <td>{{ submittedResult.averageMarks }}%</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <ng-template #noResult>
+            <div class="card border-dashed p-4 text-center text-muted bg-white h-100 d-flex justify-content-center align-items-center">
+              <div>
+                <h5>No Report Card Generated Yet</h5>
+                <p class="small mb-0">Fill in student information and add subjects dynamically using FormArray on the left, then click Submit.</p>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

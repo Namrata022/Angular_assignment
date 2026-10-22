@@ -1,0 +1,32 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Question 18: Angular Router Navigation</h4>
+      <span class="badge bg-primary">Home / About / Contact</span>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="text-muted">
+        Using the Angular router to switch between three components with different content. Click any of the tabs below:
+      </p>
+
+      <!-- Sub Navigation Bar -->
+      <nav class="nav nav-pills nav-fill mb-4 p-2 bg-light rounded border">
+        <a class="nav-link" routerLink="home" routerLinkActive="active">
+          🏠 Home
+        </a>
+        <a class="nav-link" routerLink="about" routerLinkActive="active">
+          ℹ️ About
+        </a>
+        <a class="nav-link" routerLink="contact" routerLinkActive="active">
+          📞 Contact
+        </a>
+      </nav>
+
+      <!-- Routed Component View -->
+      <div class="border rounded p-4 bg-white shadow-sm">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

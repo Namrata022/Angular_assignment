@@ -1,0 +1,137 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Question 21: Student Admission Form</h4>
+      <span class="badge bg-warning text-dark">Template-Driven Form</span>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="text-muted">
+        Fill out the student admission form below. Validations for required fields and valid email format are handled via template directives (<code>required</code>, <code>email</code>).
+      </p>
+
+      <div class="row">
+        <!-- Admission Form -->
+        <div class="col-lg-7">
+          <form #admissionForm="ngForm" (ngSubmit)="onSubmit(admissionForm)" novalidate class="card p-4 bg-light border-0 shadow-sm">
+            <!-- Name Field -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Student Name <span class="text-danger">*</span></label>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="name.invalid && (name.dirty || name.touched)"
+                name="name"
+                [(ngModel)]="admission.name"
+                #name="ngModel"
+                required
+                minlength="3"
+                placeholder="Enter full name"
+              />
+              <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback">
+                <span *ngIf="name.errors?.['required']">Student name is required.</span>
+                <span *ngIf="name.errors?.['minlength']">Name must be at least 3 characters.</span>
+              </div>
+            </div>
+
+            <!-- Email Field -->
+            <div class="mb-3">
+              <label class="form-label fw-bold">Email Address <span class="text-danger">*</span></label>
+              <input
+                type="email"
+                class="form-control"
+                [class.is-invalid]="email.invalid && (email.dirty || email.touched)"
+                name="email"
+                [(ngModel)]="admission.email"
+                #email="ngModel"
+                required
+                email
+                placeholder="student@example.com"
+              />
+              <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback">
+                <span *ngIf="email.errors?.['required']">Email is required.</span>
+                <span *ngIf="email.errors?.['email']">Please enter a valid email address.</span>
+              </div>
+            </div>
+
+            <!-- Gender Radio Buttons -->
+            <div class="mb-3">
+              <label class="form-label fw-bold d-block">Gender <span class="text-danger">*</span></label>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="male" value="Male" [(ngModel)]="admission.gender" #gender="ngModel" required />
+                <label class="form-check-label" for="male">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="female" value="Female" [(ngModel)]="admission.gender" #gender="ngModel" required />
+                <label class="form-check-label" for="female">Female</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="gender" id="other" value="Other" [(ngModel)]="admission.gender" #gender="ngModel" required />
+                <label class="form-check-label" for="other">Other</label>
+              </div>
+              <div *ngIf="gender.invalid && (gender.dirty || gender.touched)" class="text-danger small mt-1">
+                Please select a gender.
+              </div>
+            </div>
+
+            <!-- Course Selection -->
+            <div class="mb-4">
+              <label class="form-label fw-bold">Course Selection <span class="text-danger">*</span></label>
+              <select
+                class="form-select"
+                [class.is-invalid]="course.invalid && (course.dirty || course.touched)"
+                name="course"
+                [(ngModel)]="admission.course"
+                #course="ngModel"
+                required
+              >
+                <option value="" disabled selected>-- Select a course --</option>
+                <option *ngFor="let c of courses" [value]="c">{{ c }}</option>
+              </select>
+              <div *ngIf="course.invalid && (course.dirty || course.touched)" class="invalid-feedback">
+                Please select an enrolled course.
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary" [disabled]="admissionForm.invalid">
+                Submit Admission
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="resetForm(admissionForm)">
+                Reset Form
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Submitted Summary Card -->
+        <div class="col-lg-5 mt-4 mt-lg-0">
+          <div *ngIf="submittedData; else noData" class="card border-success shadow-sm">
+            <div class="card-header bg-success text-white">
+              <h5 class="mb-0">Admission Confirmation</h5>
+            </div>
+            <div class="card-body">
+              <p class="text-success fw-bold">Admission submitted successfully!</p>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Name:</strong> {{ submittedData.name }}</li>
+                <li class="list-group-item"><strong>Email:</strong> {{ submittedData.email }}</li>
+                <li class="list-group-item"><strong>Gender:</strong> {{ submittedData.gender }}</li>
+                <li class="list-group-item"><strong>Selected Course:</strong> {{ submittedData.course }}</li>
+              </ul>
+            </div>
+          </div>
+
+          <ng-template #noData>
+            <div class="card border-dashed p-4 text-center text-muted bg-white h-100 d-flex justify-content-center align-items-center">
+              <div>
+                <h5>No Admission Submitted Yet</h5>
+                <p class="small mb-0">Fill out and submit the form on the left to see the admission record summary.</p>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

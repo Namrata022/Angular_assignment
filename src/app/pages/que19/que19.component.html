@@ -1,0 +1,59 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Question 19: Route Parameters (Dynamic Routing)</h4>
+      <span class="badge bg-info text-dark">/student/:id</span>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="text-muted">
+        Demonstrating dynamic route parameters in Angular using <code>/student/:id</code>. Click on any student below to navigate to their specific profile page, or enter a custom ID.
+      </p>
+
+      <!-- Custom ID Quick Jump -->
+      <div class="card bg-light p-3 mb-4">
+        <label class="form-label fw-bold">Test Custom Route Parameter:</label>
+        <div class="input-group" style="max-width: 400px;">
+          <span class="input-group-text">/student/</span>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="e.g. 101, 102, 999"
+            [(ngModel)]="customId"
+            (keyup.enter)="goToStudent()"
+          />
+          <button class="btn btn-primary" (click)="goToStudent()" [disabled]="!customId">
+            Go &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- Students Table -->
+      <h5 class="mb-3">Available Students:</h5>
+      <div class="table-responsive">
+        <table class="table table-hover table-striped align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Student Name</th>
+              <th>Course</th>
+              <th>Dynamic Route Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let s of students">
+              <td><span class="badge bg-secondary fs-6">{{ s.id }}</span></td>
+              <td class="fw-bold">{{ s.name }}</td>
+              <td>{{ s.course }}</td>
+              <td>
+                <a [routerLink]="['/student', s.id]" class="btn btn-outline-primary btn-sm">
+                  View Details (/student/{{ s.id }}) &rarr;
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

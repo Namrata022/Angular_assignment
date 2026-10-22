@@ -1,0 +1,79 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Student Details</h4>
+      <span class="badge bg-light text-primary fs-6">Route: /student/{{ studentId }}</span>
+    </div>
+
+    <div class="card-body p-4">
+      <!-- When student is found -->
+      <div *ngIf="student; else notFound">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card p-3 bg-light border-0 mb-3">
+              <h3 class="text-primary mb-1">{{ student.name }}</h3>
+              <p class="text-muted mb-0">Enrolled Course: <strong>{{ student.course }}</strong></p>
+            </div>
+
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <th class="w-25 bg-light">Student ID</th>
+                  <td><span class="badge bg-secondary">{{ student.id }}</span></td>
+                </tr>
+                <tr>
+                  <th class="bg-light">Full Name</th>
+                  <td>{{ student.name }}</td>
+                </tr>
+                <tr>
+                  <th class="bg-light">Course</th>
+                  <td>{{ student.course }}</td>
+                </tr>
+                <tr *ngIf="student.email">
+                  <th class="bg-light">Email</th>
+                  <td><a [href]="'mailto:' + student.email">{{ student.email }}</a></td>
+                </tr>
+                <tr *ngIf="student.grade">
+                  <th class="bg-light">Grade</th>
+                  <td><span class="badge bg-success">{{ student.grade }}</span></td>
+                </tr>
+                <tr *ngIf="student.age">
+                  <th class="bg-light">Age</th>
+                  <td>{{ student.age }} years</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="col-md-4">
+            <div class="card p-3 border-info mb-3">
+              <h5 class="card-title text-info">Switch Student (Dynamic Route)</h5>
+              <p class="text-muted small">Click to test route parameter switching:</p>
+              <div class="d-grid gap-2">
+                <a routerLink="/student/101" class="btn btn-outline-primary btn-sm">/student/101 (Alice)</a>
+                <a routerLink="/student/102" class="btn btn-outline-primary btn-sm">/student/102 (Bob)</a>
+                <a routerLink="/student/103" class="btn btn-outline-primary btn-sm">/student/103 (Charlie)</a>
+                <a routerLink="/student/104" class="btn btn-outline-primary btn-sm">/student/104 (Diana)</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- When student is not found -->
+      <ng-template #notFound>
+        <div class="alert alert-warning" role="alert">
+          <h5 class="alert-heading">Student Not Found!</h5>
+          <p class="mb-0">No student found with ID: <strong>{{ studentId }}</strong>. Please check the ID in the URL parameter.</p>
+        </div>
+      </ng-template>
+
+      <!-- Navigation back -->
+      <div class="mt-4">
+        <a routerLink="/que19" class="btn btn-secondary">
+          &larr; Back to Student List
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <div class="card shadow-sm border-0">
+    <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Question 20: Route Guard Protected Admin Page</h4>
+      <span class="badge" [ngClass]="authService.isLoggedIn() ? 'bg-success' : 'bg-danger'">
+        Status: {{ authService.isLoggedIn() ? 'Logged In (Admin)' : 'Logged Out (Guest)' }}
+      </span>
+    </div>
+
+    <div class="card-body p-4">
+      <p class="text-muted">
+        This demonstrates a route guard (<code>canActivate: [authGuard]</code>) that prevents unauthorized users from accessing the <code>/admin</code> page unless they are logged in.
+      </p>
+
+      <div class="card bg-light p-4 mb-4">
+        <h5>Authentication Control</h5>
+        <p class="mb-3">
+          Current State: 
+          <strong [class.text-success]="authService.isLoggedIn()" [class.text-danger]="!authService.isLoggedIn()">
+            {{ authService.isLoggedIn() ? 'Authenticated as Admin' : 'Not Authenticated' }}
+          </strong>
+        </p>
+
+        <div class="d-flex gap-2">
+          <button
+            class="btn"
+            [ngClass]="authService.isLoggedIn() ? 'btn-warning' : 'btn-success'"
+            (click)="toggleLogin()">
+            {{ authService.isLoggedIn() ? 'Log Out' : 'Log In as Admin' }}
+          </button>
+
+          <button class="btn btn-primary" (click)="navigateToAdmin()">
+            Go to /admin Page &rarr;
+          </button>
+        </div>
+      </div>
+
+      <div class="alert alert-info mb-0">
+        <strong>How to test:</strong>
+        <ol class="mb-0 mt-2">
+          <li>While <strong>Logged Out</strong>, click <em>"Go to /admin Page"</em> or enter <code>/admin</code> in the browser URL. The guard will block access and show an alert.</li>
+          <li>Click <em>"Log In as Admin"</em>, then click <em>"Go to /admin Page"</em>. The guard will allow you to view the Admin Dashboard!</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
